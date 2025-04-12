@@ -64,6 +64,65 @@
     .container .form-container .social-login .control__group--facebook {
         background-color: #1877f2;
     }
+
+    .error {
+        color: red;
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        font-size: 1.2em;
+        color: #333;
+    }
+
+
+    form button[type="submit"] {
+
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        background-color: #2846a7;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: 0.3s all ease;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #1e3578;
+    }
+
+    form input::placeholder {
+        color: #999;
+        font-style: italic;
+    }
+
+    form input:focus {
+        border-color: #2846a7;
+        outline: none;
+    }
+
+    form input:has(:invalid) {
+        border-color: red;
+    }
+
+    form input:has(:valid) {
+        border-color: green;
+    }
+
+    .error {
+        color: red;
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    form .input-group input:focus {
+        outline: none;
+        /* border-color: #2e2b41; */
+    }
     </style>
 </head>
 
@@ -71,26 +130,49 @@
 
     <div class="container container-login" id="container">
         <div class="form-container">
-            <form action="" method="post" id="form">
+            <form action="/register" method="post" id="form-signup">
                 <h1 class="text-capitalize mb-3 text-center">Đăng Ký</h1>
 
-                <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                    <label for="input__mail"><i class="fa-solid fa-envelope"></i></label>
-                    <input type="email" placeholder="Email" class="input__mail" id="input__mail" name="email" />
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="username">
+                            <i class="fa-solid fa-user"></i></label>
+                        <input type="text" placeholder="Username" class="input__username " id="username"
+                            name="username" />
+                    </div>
+
                 </div>
 
-                <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                    <label for="input__pass"><i class="ri-lock-line"></i></label>
-                    <input type="password" placeholder="Password" class="input__pass" id="input__pass"
-                        name="password" />
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="mail">
+                            <i class="fa-solid fa-envelope"></i></label>
+                        <input type="email" placeholder="Email" class="input__mail" id="mail" name="email" />
+                    </div>
+
                 </div>
 
-                <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                    <label for="input__cfPass"><i class="ri-lock-line"></i></label>
-                    <input type="password" placeholder="Password" class="input__cfPass" id="input__cfPass"
-                        name="password" />
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="password">
+                            <i class="ri-lock-line"></i></label>
+                        <input type="password" placeholder="Password" class="input__pass " id="password"
+                            name="password" />
+                    </div>
+
                 </div>
-                <button type="submit " class="btn signUp">Đăng ký</button>
+
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="cfPassword">
+                            <i class="ri-lock-line"></i></label>
+                        <input type="password" placeholder="Password" class="input__pass " id="cfPassword"
+                            name="cfPassword" />
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn signUp" name="signIn">Đăng Ký</button>
 
                 <div class="line"><span>hoặc đăng ký bằng</span></div>
 
@@ -357,5 +439,6 @@ window.onload = function() {
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="../helper/validate.js"></script>
 
 </html>

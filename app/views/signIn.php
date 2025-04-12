@@ -1,3 +1,23 @@
+<?php
+session_start(); 
+$_SESSION['all'] = [];  
+
+if (isset($_POST['signIn'])) {
+    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // Lưu vào session
+    $_SESSION['all'][0] = $username;
+    $_SESSION['all'][1] = $email;
+    $_SESSION['all'][2] = $password;  
+
+   echo '
+    <h3>Username: '.$SESSION['all'][0].'</h3>;
+    <h3>Password:'.$SESSION['all'][1].' </h3>';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,27 +62,100 @@
     .container .form-container .social-login .control__group--facebook {
         background-color: #1877f2;
     }
+
+
+
+    .form-group label {
+        font-weight: 500;
+        font-size: 1.2em;
+        color: #333;
+    }
+
+
+    form button[type="submit"] {
+
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        background-color: #2846a7;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: 0.3s all ease;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #1e3578;
+    }
+
+    form input::placeholder {
+        color: #999;
+        font-style: italic;
+    }
+
+    form input:focus {
+        border-color: #2846a7;
+        outline: none;
+    }
+
+    form input:has(:invalid) {
+        border-color: red;
+    }
+
+    form input:has(:valid) {
+        border-color: green;
+    }
+
+    .error {
+        color: red;
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    form .input-group input:focus {
+        outline: none;
+        /* border-color: #2e2b41; */
+    }
     </style>
 </head>
 
 <body>
     <div class="container container-login" id="container">
         <div class="form-container">
-            <form action="" method="post" id="form">
+            <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" id="form-login">
                 <h1 class="text-capitalize mb-3 text-center">Đăng Nhập</h1>
 
-                <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                    <label for="input__mail"><i class="fa-solid fa-envelope"></i></label>
-                    <input type="email" placeholder="Email" class="input__mail" id="input__mail" name="email" />
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="username">
+                            <i class="fa-solid fa-user"></i></label>
+                        <input type="text" placeholder="Username" class="input__username " id="username"
+                            name="username" />
+                    </div>
+
                 </div>
 
-                <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                    <label for="input__pass"><i class="ri-lock-line"></i></label>
-                    <input type="password" placeholder="Password" class="input__pass" id="input__pass"
-                        name="password" />
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="mail">
+                            <i class="fa-solid fa-envelope"></i></label>
+                        <input type="email" placeholder="Email" class="input__mail" id="mail" name="email" />
+                    </div>
+
                 </div>
 
-                <button type="submit" class="btn signUp">Đăng Nhập</button>
+                <div>
+                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                        <label for="password">
+                            <i class="ri-lock-line"></i></label>
+                        <input type="password" placeholder="Password" class="input__pass " id="password"
+                            name="password" />
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn signUp" name="signIn">Đăng Nhập</button>
 
                 <div class="line"><span>hoặc đăng nhập bằng</span></div>
 
@@ -92,15 +185,54 @@
                     <a href="./signUp.php" class="form__desc" id="createAccount">Tạo mới tài khoản?</a>
                 </p>
             </form>
-
-            <div id="profile" style="display:none;">
-                <h3>Chào, <span id="userName"></span>!</h3>
-                <img id="userImage" src="" alt="User Image" />
-                <p>Email: <span id="userEmail"></span></p>
-                <button onclick="logout()" class="btn btn-danger">Đăng Xuất</button>
-            </div>
         </div>
     </div>
+    <?php
+
+
+
+
+
+   
+// require_once 'db.php'; // Gọi file kết nối
+
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $name = trim($_POST["username"]);
+//     $email = trim($_POST["email"]);
+//     $password = $_POST["password"];
+//     $cfPassword = $_POST["cfPassword"];
+
+//     // Kiểm tra xác nhận mật khẩu
+//     if ($password !== $cfPassword) {
+//         die("Mật khẩu xác nhận không khớp!");
+//     }
+
+//     // Mã hóa mật khẩu
+//     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+//     try {
+//         // Chuẩn bị và thực thi câu lệnh SQL
+//         $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
+//         $stmt->execute([
+//             ':name' => $name,
+//             ':email' => $email,
+//             ':password' => $hashedPassword
+//         ]);
+
+//         echo "Đăng ký thành công!";
+//         // Có thể redirect sau khi đăng ký thành công
+//         header("Location: signIn.php");
+//         exit;
+//     } catch (PDOException $e) {
+//         if ($e->getCode() == 23000) { // Lỗi trùng email (UNIQUE)
+//             echo "Email đã tồn tại!";
+//         } else {
+//             echo "Lỗi: " . $e->getMessage();
+//         }
+//     }
+// }
+// ?>
+
 
     <!-- SDK Google -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -196,6 +328,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="../helper/validate.js"></script>
 
 </body>
 

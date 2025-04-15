@@ -1,4 +1,11 @@
-<?php include_once 'partials/sidebar.php'; ?>
+<?php
+require_once dirname(__DIR__, 2) . '/config/config.php'; // Tạm thời sử dụng đường dẫn trực tiếp để kiểm tra
+// Sau khi xác nhận config.php hoạt động, bạn có thể quay lại sử dụng BASE_PATH
+include BASE_PATH . 'partials/header.php';
+include BASE_PATH . 'partials/sidebar.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,10 +51,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" />
 
     <!-- *Stylesheets* -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/base.css" />
-    <link rel="stylesheet" href="./assets/css/responsive.css" />
-    <link rel="stylesheet" href="./assets/css/animation.css" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../../assets/css/animation.css" />
     <!-- *Mobile Optimization* -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#0d6efd" />
@@ -61,8 +68,6 @@
 </head>
 
 <body>
-
-    <?php include_once 'partials/header.php'; ?>
 
     <!-- *Banner-home* -->
     <div class="banner__home py-5 border-bottom">
@@ -592,7 +597,8 @@
                         Bác sĩ nổi bật
                     </h3>
                     <a href="/pages/doctors.html"
-                        class="text-decoration-none btn rounded-pill px-4 fw-medium btn-more">Xem thêm</a>
+                        class="text-decoration-none btn rounded-pill px-4 fw-medium btn-more">Xem
+                        thêm</a>
                 </div>
             </div>
 
@@ -1719,10 +1725,11 @@
             </div>
         </div>
     </section>
-
-    <?php include_once 'partials/footer.php'; ?>
 </body>
+<?php
+include BASE_PATH . 'partials/footer.php';
 
+?>
 <!-- *SplideJS Scripts* -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/css/splide.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/js/splide.min.js"></script>
@@ -1735,63 +1742,12 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 </script>
 <!-- *Javascript* -->
-<script src="./assets/javascript/main.js" type="module"></script>
-<script src="./services/handleModal.js"></script>
-<script src="./services/handleSlider.js"></script>
-<script src="./services/handleSlider.js"></script>
+<script src="../../assets/javascript/main.js" type="module"></script>
+<script src="../../services/handleModal.js"></script>
+<script src="../../services/handleSlider.js"></script>
+<script src="../../services/handleSlider.js"></script>
 <!-- *Lazysizes* -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.0/lazysizes.min.js" async=""></script>
 <!-- *Splide JS* -->
 
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-<script>
-function onSignIn(googleUser) {
-    // Lấy thông tin người dùng sau khi đăng nhập thành công
-    var profile = googleUser.getBasicProfile();
-    var user = {
-        name: profile.getName(),
-        avatar: profile.getImageUrl(),
-        email: profile.getEmail(),
-    };
-
-    // Lưu thông tin người dùng vào localStorage
-    localStorage.setItem("user", JSON.stringify(user));
-
-    // Điều hướng về trang chủ (hoặc trang bạn muốn)
-    window.location.href = "index.html";
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    const loginBtn = document.querySelector(".topbar__home--login");
-    const registerBtn = document.querySelector(".topbar__home--register");
-    const userProfile = document.getElementById("user-profile");
-    const userAvatar = document.getElementById("user-avatar");
-    const userName = document.getElementById("user-name");
-    const logoutBtn = document.getElementById("logout-btn");
-
-    // Kiểm tra xem người dùng có đăng nhập không
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (user) {
-        // Nếu đã đăng nhập, ẩn nút Đăng nhập & Đăng ký, hiển thị Avatar
-        loginBtn.style.display = "none";
-        registerBtn.style.display = "none";
-        userProfile.classList.remove("d-none");
-
-        // Hiển thị thông tin người dùng
-        userAvatar.src = user.avatar;
-        userName.textContent = user.name;
-    }
-
-    // Xử lý khi người dùng đăng xuất
-    logoutBtn.addEventListener("click", function() {
-        localStorage.removeItem("user");
-        window.location.reload(); // Reload lại trang
-    });
-});
-</script>
-<!-- * Google API* -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-
-</html>

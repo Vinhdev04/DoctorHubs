@@ -1,3 +1,12 @@
+<?php
+// Debug session
+if (!isset($_SESSION)) {
+    echo "Session not started!";
+} else {
+    echo "Session values: ";
+    var_dump($_SESSION);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,34 +81,11 @@
                         |
                         <strong class="ms-1 d-none d-md-flex">Hotline:
                             <a href="tel:+84 252 032 375"
-                                class="text-decoration-none cart__home--phone text-dark fw-bold">+84 252 032
-                                375</a>
+                                class="text-decoration-none cart__home--phone text-dark fw-bold">+84 252 032 375</a>
                         </strong>
                     </div>
                     <div class="user-actions d-flex align-items-center gap-3">
                         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-                        <a href="./app/views/signIn.php"
-                            class="topbar__home--login text-dark small d-none d-md-block">Đăng
-                            nhập</a>
-                        <a href="./app/views/signUp.php"
-                            class="topbar__home--register text-dark small d-none d-md-block">Đăng ký</a>
-
-                        <div id="user-profile" class="user-profile d-none">
-                            <img id="user-avatar" src="" alt="User Avatar" class="rounded-circle" width="40"
-                                height="40" />
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownUser"
-                                    data-bs-toggle="dropdown">
-                                    <span id="user-name">User</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="#" id="logout-btn">Đăng xuất</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -137,9 +123,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./app/views/shop.php">Shop</a>
                         </li>
-                        <!-- Search Form -->
-                        <?php if (isset($_SESSION['user'])): ?>
-                        <!-- Icon giỏ hàng -->
+                        <?php if (isset($_SESSION['user_id']) && !empty($_SESSION['username'])): ?>
+                        <!-- Cart Icon -->
                         <li class="nav-item">
                             <a class="nav-link position-relative" href="./app/views/cart.php">
                                 <i class="fa fa-shopping-cart"></i>
@@ -150,13 +135,12 @@
                             </a>
                         </li>
 
-                        <!-- Avatar người dùng + Dropdown -->
+                        <!-- User Icon + Name with Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
-                                data-bs-toggle="dropdown">
-                                <img src="<?= $_SESSION['user']['avatar'] ?>" alt="Avatar" class="rounded-circle"
-                                    width="30" height="30">
-                                <span class="ms-2"><?= $_SESSION['user']['name'] ?></span>
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user-circle me-2"></i>
+                                <span><?= htmlspecialchars($_SESSION['username']) ?></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="#">Tài khoản</a></li>
@@ -165,42 +149,50 @@
                             </ul>
                         </li>
                         <?php else: ?>
-                        <!-- Nếu chưa login -->
+                        <!-- User Icon for Login -->
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/signIn.php">Đăng nhập</a>
+                            <a class="nav-link" href="./app/views/signIn.php">
+                                <i class="fa fa-user-circle"></i>
+                            </a>
                         </li>
+                        <!-- Cart Icon -->
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/signUp.php">Đăng ký</a>
+                            <a class="nav-link position-relative" href="./app/views/cart.php">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                </span>
+                            </a>
                         </li>
                         <?php endif; ?>
-
                     </ul>
                 </div>
             </nav>
         </div>
     </header>
+
+    <!-- *SplideJS Scripts* -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/css/splide.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/js/splide.min.js"></script>
+    <!-- *Popper* -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-JGLZOLoMCs5hQdIb2Rlp+vgbp7NjPR8tW3mv4TqRfj7sG04O1LYljX29lvH9acX7" crossorigin="anonymous">
+    </script>
+    <!-- *Bootstrap* -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <!-- *Javascript* -->
+    <script src="./assets/javascript/main.js" type="module"></script>
+    <script src="./services/handleModal.js"></script>
+    <script src="./services/handleSlider.js"></script>
+    <!-- *Lazysizes* -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.0/lazysizes.min.js" async=""></script>
+    <!-- *Splide JS* -->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <!-- *Google API* -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
-<!-- *SplideJS Scripts* -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/css/splide.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/js/splide.min.js"></script>
-<!-- *Popper* -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-    integrity="sha384-JGLZOLoMCs5hQdIb2Rlp+vgbp7NjPR8tW3mv4TqRfj7sG04O1LYljX29lvH9acX7" crossorigin="anonymous">
-</script>
-<!-- *Bootstrap* -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>
-<!-- *Javascript* -->
-<script src="./assets/javascript/main.js" type="module"></script>
-<script src="./services/handleModal.js"></script>
-<script src="./services/handleSlider.js"></script>
-<script src="./services/handleSlider.js"></script>
-<!-- *Lazysizes* -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.0/lazysizes.min.js" async=""></script>
-<!-- *Splide JS* -->
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script><!-- * Google API* -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </html>

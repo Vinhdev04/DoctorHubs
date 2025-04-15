@@ -1,3 +1,63 @@
+<?php
+session_start();
+require_once "../../config/config.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = trim($_POST["username"] ?? '');
+    $email = trim($_POST["email"] ?? '');
+    $password = trim($_POST["password"] ?? '');
+    $cfPassword = trim($_POST["cfPassword"] ?? '');
+
+    // Kiểm tra dữ liệu đầu vào
+    if (empty($username) || empty($email) || empty($password) || empty($cfPassword)) {
+        $_SESSION["signup_error"] = "Vui lòng điền đầy đủ thông tin.";
+        header("Location: signUp.php");
+        exit();
+    }
+
+    // Kiểm tra mật khẩu có khớp không
+    if ($password !== $cfPassword) {
+        $_SESSION["signup_error"] = "Mật khẩu không khớp.";
+        header("Location: signUp.php");
+        exit();
+    }
+
+    // Hash mật khẩu
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Kiểm tra trùng email
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->rowCount() > 0) {
+        $_SESSION["signup_error"] = "Email đã được đăng ký.";
+        header("Location: signUp.php");
+        exit();
+    }
+
+    // Kiểm tra trùng username
+    $stmt = $conn->prepare("SELECT * FROM users WHERE name = ?");
+    $stmt->execute([$username]);
+    if ($stmt->rowCount() > 0) {
+        $_SESSION["signup_error"] = "Tên người dùng đã tồn tại.";
+        header("Location: signUp.php");
+        exit();
+    }
+
+    // Chèn người dùng mới vào DB
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password, RoleId, Status) VALUES (?, ?, ?, ?, ?)");
+    if ($stmt->execute([$username, $email, $hashedPassword, 1, 'active'])) {
+        $_SESSION["success_signup"] = true;
+        header("Location: signUp.php");
+        exit();
+    } else {
+        $_SESSION["signup_error"] = "Lỗi khi đăng ký: " . implode(", ", $stmt->errorInfo());
+        header("Location: signUp.php");
+        exit();
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +73,7 @@
     <!-- *Liên kết Bootstrap CSS* -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.18.0/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="../../assets/css/base.css" />
     <link rel="stylesheet" href="../../assets/css/animation.css" />
     <link rel="stylesheet" href="../../assets/css/login.css" />
@@ -130,7 +191,7 @@
 
     <div class="container container-login" id="container">
         <div class="form-container">
-            <form action="/register" method="post" id="form-signup">
+            <form action="" method="post" id="form-signup">
                 <h1 class="text-capitalize mb-3 text-center">Đăng Ký</h1>
 
                 <div>
@@ -202,6 +263,25 @@
                     <a href="./signIn.php" class="form__desc" id="createAccount">Đăng nhập</a>
                 </p>
             </form>
+            <?php
+if (isset($_SESSION["success_signup"])) {
+    unset($_SESSION["success_signup"]); // Xoá flag
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            title: 'Đăng ký thành công!',
+            icon: 'success',
+            confirmButtonText: 'Đến trang đăng nhập'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'signIn.php'; // ← Trang đăng nhập
+            }
+        });
+    </script>
+    ";
+}
+?>
 
             <div id="profile" style="display:none;">
                 <h3>Chào, <span id="userName"></span>!</h3>
@@ -211,6 +291,8 @@
             </div>
         </div>
     </div>
+
+
 </body>
 
 <!-- *Bootstrap* -->
@@ -222,7 +304,8 @@
 
 <!-- SDK Facebook -->
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
+<!-- Sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.18.0/dist/sweetalert2.all.min.js"></script>
 <script>
 // Google Login
 window.onload = function() {
@@ -440,5 +523,33 @@ window.onload = function() {
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="../helper/validate.js"></script>
+<script>
+
+</script>
+<?php if (isset($_SESSION["success_signup"])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+    title: 'Đăng ký thành công!',
+    icon: 'success',
+    confirmButtonText: 'Đến đăng nhập'
+}).then(() => {
+    window.location.href = 'signIn.php'; // Trang đăng nhập
+});
+</script>
+<?php unset($_SESSION["success_signup"]); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION["signup_error"])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+    title: 'Lỗi!',
+    text: '<?= $_SESSION["signup_error"] ?>',
+    icon: 'error'
+});
+</script>
+<?php unset($_SESSION["signup_error"]); ?>
+<?php endif; ?>
 
 </html>

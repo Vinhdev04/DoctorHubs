@@ -1,20 +1,42 @@
 <?php
-session_start(); 
-$_SESSION['all'] = [];  
+
+require_once '../../config/config.php';
 
 if (isset($_POST['signIn'])) {
-    $username = $_POST['username'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $loginInput = trim($_POST['login'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-    // Lưu vào session
-    $_SESSION['all'][0] = $username;
-    $_SESSION['all'][1] = $email;
-    $_SESSION['all'][2] = $password;  
+    if (empty($loginInput) || empty($password)) {
+        $_SESSION["login_error"] = "Vui lòng nhập username hoặc email và mật khẩu.";
+        header("Location: signIn.php");
+        exit();
+    }
 
-   echo '
-    <h3>Username: '.$SESSION['all'][0].'</h3>;
-    <h3>Password:'.$SESSION['all'][1].' </h3>';
+    try {
+        $query = "SELECT * FROM users WHERE email = ? OR name = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([$loginInput, $loginInput]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            if (password_verify($password, $user['Password'])) { // Sửa 'password' thành 'Password'
+                $_SESSION['user_id'] = $user['ID']; // Sửa 'id' thành 'ID'
+                $_SESSION['username'] = $user['Name']; // Sửa 'name' thành 'Name'
+                $_SESSION['role'] = $user['RoleId']; // Sửa 'role' thành 'RoleId'
+                header("Location: ./home.php");
+                exit();
+            } else {
+                $_SESSION["login_error"] = "Sai mật khẩu.";
+            }
+        } else {
+            $_SESSION["login_error"] = "Không tìm thấy người dùng.";
+        }
+    } catch (PDOException $e) {
+        $_SESSION["login_error"] = "Lỗi hệ thống: " . $e->getMessage();
+    }
+
+    header("Location: signIn.php");
+    exit();
 }
 ?>
 
@@ -123,40 +145,28 @@ if (isset($_POST['signIn'])) {
 <body>
     <div class="container container-login" id="container">
         <div class="form-container">
-            <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" id="form-login">
+            <form action="signIn.php" method="post" id="form-login">
                 <h1 class="text-capitalize mb-3 text-center">Đăng Nhập</h1>
 
+                <!-- Username hoặc Email -->
                 <div>
                     <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                        <label for="username">
-                            <i class="fa-solid fa-user"></i></label>
-                        <input type="text" placeholder="Username" class="input__username " id="username"
-                            name="username" />
+                        <label for="login"><i class="fa-solid fa-user"></i></label>
+                        <input type="text" placeholder="Username hoặc Email" class="input__login" id="login"
+                            name="login" />
                     </div>
-
                 </div>
 
+                <!-- Password -->
                 <div>
                     <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                        <label for="mail">
-                            <i class="fa-solid fa-envelope"></i></label>
-                        <input type="email" placeholder="Email" class="input__mail" id="mail" name="email" />
-                    </div>
-
-                </div>
-
-                <div>
-                    <div class="input-group d-flex align-items-center flex-nowrap form-group">
-                        <label for="password">
-                            <i class="ri-lock-line"></i></label>
-                        <input type="password" placeholder="Password" class="input__pass " id="password"
+                        <label for="password"><i class="ri-lock-line"></i></label>
+                        <input type="password" placeholder="Password" class="input__pass" id="password"
                             name="password" />
                     </div>
-
                 </div>
 
                 <button type="submit" class="btn signUp" name="signIn">Đăng Nhập</button>
-
                 <div class="line"><span>hoặc đăng nhập bằng</span></div>
 
                 <div class="social-login mb-3 row gx-2">
@@ -181,57 +191,12 @@ if (isset($_POST['signIn'])) {
                 </div>
 
                 <p class="mt-0 text-center">
-                    Tạo mới?
-                    <a href="./signUp.php" class="form__desc" id="createAccount">Tạo mới tài khoản?</a>
+                    Bạn chưa có tài khoản?
+                    <a href="./signUp.php" class="form__desc" id="createAccount">Đăng ký</a>
                 </p>
             </form>
         </div>
     </div>
-    <?php
-
-
-
-
-
-   
-// require_once 'db.php'; // Gọi file kết nối
-
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     $name = trim($_POST["username"]);
-//     $email = trim($_POST["email"]);
-//     $password = $_POST["password"];
-//     $cfPassword = $_POST["cfPassword"];
-
-//     // Kiểm tra xác nhận mật khẩu
-//     if ($password !== $cfPassword) {
-//         die("Mật khẩu xác nhận không khớp!");
-//     }
-
-//     // Mã hóa mật khẩu
-//     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-//     try {
-//         // Chuẩn bị và thực thi câu lệnh SQL
-//         $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
-//         $stmt->execute([
-//             ':name' => $name,
-//             ':email' => $email,
-//             ':password' => $hashedPassword
-//         ]);
-
-//         echo "Đăng ký thành công!";
-//         // Có thể redirect sau khi đăng ký thành công
-//         header("Location: signIn.php");
-//         exit;
-//     } catch (PDOException $e) {
-//         if ($e->getCode() == 23000) { // Lỗi trùng email (UNIQUE)
-//             echo "Email đã tồn tại!";
-//         } else {
-//             echo "Lỗi: " . $e->getMessage();
-//         }
-//     }
-// }
-// ?>
 
 
     <!-- SDK Google -->
@@ -328,8 +293,21 @@ if (isset($_POST['signIn'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script src="../helper/validate.js"></script>
+    <!-- <script src="../helper/validate.js"></script> -->
 
 </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if (isset($_SESSION["login_error"])): ?>
+<script>
+Swal.fire({
+    title: 'Lỗi!',
+    text: '<?= $_SESSION["login_error"] ?>',
+    icon: 'error'
+});
+</script>
+<?php unset($_SESSION["login_error"]); ?>
+<?php endif; ?>
 
 </html>

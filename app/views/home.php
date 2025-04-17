@@ -1,42 +1,9 @@
-<?php
-require_once dirname(__DIR__, 2) . '/config/config.php'; // Tạm thời sử dụng đường dẫn trực tiếp để kiểm tra
-// Sau khi xác nhận config.php hoạt động, bạn có thể quay lại sử dụng BASE_PATH
-include BASE_PATH . 'partials/header.php';
-include BASE_PATH . 'partials/sidebar.php';
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- *SEO Meta Tags* -->
-    <meta name="description"
-        content="DoctorHub - Đặt lịch khám bệnh và tư vấn sức khỏe trực tuyến. Tiết kiệm thời gian, chăm sóc sức khỏe mọi lúc, mọi nơi." />
-    <meta name="keywords"
-        content="đặt lịch khám, tư vấn sức khỏe, khám bệnh trực tuyến, chăm sóc sức khỏe, đặt lịch bác sĩ" />
-    <meta name="robots" content="index, follow" />
-    <!-- *Open Graph Meta Tags for Social Media* -->
-    <meta property="og:title" content="DoctorHub - Đặt lịch khám và tư vấn sức khỏe" />
-    <meta property="og:description"
-        content="DoctorHub giúp bạn dễ dàng đặt lịch khám bệnh và nhận tư vấn sức khỏe từ các bác sĩ uy tín." />
-    <meta property="og:image" content="URL_of_image_for_social_sharing" />
-    <meta property="og:url" content="https://www.doctorhub.com" />
-    <meta property="og:type" content="website" />
-    <!-- *Twitter Card Meta Tags* -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="DoctorHub - Đặt lịch khám và tư vấn sức khỏe" />
-    <meta name="twitter:description"
-        content="Đặt lịch khám bệnh và tư vấn sức khỏe trực tuyến với DoctorHub, giúp bạn chăm sóc sức khỏe dễ dàng và hiệu quả." />
-    <meta name="twitter:image" content="URL_of_image_for_twitter_card" />
-    <meta name="60552469035-27c42t2tcr98qbmp27b6r2tti6b8vvql.apps.googleusercontent.com"
-        content="YOUR_GOOGLE_CLIENT_ID" />
-
-    <!-- *Title* -->
-    <title>DoctorHub - Đặt Lịch Khám và Tư Vấn Sức Khỏe</title>
-    <!-- *Favicon* -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- *Favicon* -->
     <link rel="icon" href="./assets/images/Logo/DoctorHub.png" type="image/x-icon" />
     <!-- *Liên kết Bootstrap CSS* -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -49,73 +16,36 @@ include BASE_PATH . 'partials/sidebar.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <!-- *LazySizes* -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" />
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
+    <!-- jQuery (yêu cầu cho Toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <!-- *Mobile Optimization* -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0d6efd" />
     <!-- *Stylesheets* -->
     <link rel="stylesheet" href="../../assets/css/style.css" />
     <link rel="stylesheet" href="../../assets/css/base.css" />
     <link rel="stylesheet" href="../../assets/css/responsive.css" />
     <link rel="stylesheet" href="../../assets/css/animation.css" />
-    <!-- *Mobile Optimization* -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#0d6efd" />
-    <style>
-    .user-profile {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    </style>
+    <title>Home | DoctorHub</title>
 </head>
 
 <body>
-
-    <!-- *Banner-home* -->
-    <div class="banner__home py-5 border-bottom">
-        <div class="container">
-            <div class="row">
-                <div
-                    class="col-md-5 d-flex flex-column justify-content-center align-items-start order-last order-md-first">
-                    <h4 class="banner__home--subtitle mb-3 text-warning-emphasis">
-                        Khám bệnh trực tuyến, tiết kiệm thời gian
-                    </h4>
-
-                    <h1 class="banner__home--title mb-4 text-primary">
-                        Khám Bệnh và Tư Vấn Sức Khỏe Online
-                    </h1>
-
-                    <p class="banner__home--description mb-4">
-                        Đặt lịch khám và nhận tư vấn trực tuyến từ các bác sĩ uy tín, giúp
-                        bạn chăm sóc sức khỏe một cách dễ dàng và nhanh chóng.
-                    </p>
-                    <!-- Nút Call-to-Action -->
-                    <a class="text-decoration-none btn cssbuttons-io-button" href="./app/views/test.php">
-                        Đặt Lịch Ngay
-                        <div class="icon">
-                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                <path
-                                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                    fill="currentColor"></path>
-                            </svg>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-7">
-                    <a href="/pages/book.html" class="text-decoration-none banner__home--wrap mt-3 mt-md-0">
-                        <img data-src="./assets/images/Banner/BannerHome.png" alt="Banner Image"
-                            class="img-fluid w-100 shadow rounded-2 lazyload mb-md-0 mb-3" />
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include_once __DIR__ . '/../../partials/header.php'; ?>
 
     <!-- *about-home* -->
     <section class="about py-5 bg-light">
         <div class="container text-center">
             <div class="about__icon mb-3">
-                <img data-src="./assets/images/Icon/doctornurse-svgrepo-com.svg" alt="" class="img-fluid lazyloaded"
-                    style="width: 50px">
+                <img data-src="/DoctorHubs/assets/images/Icon/doctornurse-svgrepo-com.svg" alt=""
+                    class="img-fluid lazyloaded" style="width: 50px">
             </div>
             <h2 class="mb-3 text-primary position-relative section-title-underline animate-on-scroll visible">
                 Về DoctorHub
@@ -135,7 +65,7 @@ include BASE_PATH . 'partials/sidebar.php';
                 <div class="col-md-4 mb-4 animate-on-scroll visible">
                     <a href="/pages/book.html"
                         class="d-flex flex-column align-items-center text-decoration-none feature-card p-4 rounded shadow-sm h-100">
-                        <img data-src="./assets/images/Icon/appointment-dentist-svgrepo-com.svg" alt=""
+                        <img data-src="../../assets/images/Icon/appointment-dentist-svgrepo-com.svg" alt=""
                             class="features__icon lazyload" />
                         <h5 class="features-title fw-semibold mt-1">Đặt lịch dễ dàng</h5>
                         <p class="text-secondary">
@@ -146,7 +76,7 @@ include BASE_PATH . 'partials/sidebar.php';
                 <div class="col-md-4 mb-4 animate-on-scroll visible">
                     <a href="/pages/consultation.html"
                         class="d-flex flex-column align-items-center text-decoration-none feature-card p-4 rounded shadow-sm h-100">
-                        <img data-src="./assets/images/Icon/doctor-files-medical-svgrepo-com.svg" alt=""
+                        <img data-src="../../assets/images/Icon/doctor-files-medical-svgrepo-com.svg" alt=""
                             class="features__icon lazyload" />
                         <h5 class="features-title fw-semibold mt-1">
                             Tư vấn cùng bác sĩ
@@ -159,7 +89,7 @@ include BASE_PATH . 'partials/sidebar.php';
                 <div class="col-md-4 mb-4 animate-on-scroll visible">
                     <a href="/pages/services.html"
                         class="d-flex flex-column align-items-center text-decoration-none feature-card p-4 rounded shadow-sm h-100">
-                        <img data-src="./assets/images/Icon/security-shield-svgrepo-com.svg" alt=""
+                        <img data-src="../../assets/images/Icon/security-shield-svgrepo-com.svg" alt=""
                             class="features__icon lazyloaded"
                             src="./assets/images/Icon/security-shield-svgrepo-com.svg" />
                         <h5 class="features-title fw-semibold mt-1">Bảo mật thông tin</h5>
@@ -180,7 +110,7 @@ include BASE_PATH . 'partials/sidebar.php';
             <div class="row">
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Reproductive health icon" data-src="./assets/images/Icon/sinhsan.avif"
+                        <img alt="Reproductive health icon" data-src="../../assets/images/Icon/sinhsan.avif"
                             class="lazyload" />
                         <span>Sức khỏe sinh sản</span>
                     </div>
@@ -188,14 +118,14 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Eye health icon" data-src="./assets/images/Icon/mat.avif" class="lazyload" />
+                        <img alt="Eye health icon" data-src="../../assets/images/Icon/mat.avif" class="lazyload" />
                         <span>Mắt</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Ear, nose, and throat health icon" data-src="./assets/images/Icon/taimuihong.avif"
+                        <img alt="Ear, nose, and throat health icon" data-src="../../assets/images/Icon/taimuihong.avif"
                             class="lazyload" />
                         <span>Tai - Mũi - Họng</span>
                     </div>
@@ -203,7 +133,7 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Respiratory health icon" data-src="./assets/images/Icon/hohap.avif"
+                        <img alt="Respiratory health icon" data-src="../../assets/images/Icon/hohap.avif"
                             class="lazyload" />
                         <span>Hô hấp</span>
                     </div>
@@ -211,7 +141,7 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Parasitic treatment icon" data-src="./assets/images/Icon/kysinhtrung.avif"
+                        <img alt="Parasitic treatment icon" data-src="../../assets/images/Icon/kysinhtrung.avif"
                             class="lazyload" />
                         <span>Thuốc trị ký sinh trùng</span>
                     </div>
@@ -219,14 +149,15 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Mental health icon" data-src="./assets/images/Icon/tamthan.avif" class="lazyload" />
+                        <img alt="Mental health icon" data-src="../../assets/images/Icon/tamthan.avif"
+                            class="lazyload" />
                         <span>Tâm thần</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Bone and joint health icon" data-src="./assets/images/Icon/coxuongkhop.avif"
+                        <img alt="Bone and joint health icon" data-src="../../assets/images/Icon/coxuongkhop.avif"
                             class="lazyload" />
                         <span>Cơ - Xương - Khớp</span>
                     </div>
@@ -234,14 +165,14 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Cancer icon" data-src="./assets/images/Icon/ungthu.avif" class="lazyload" />
+                        <img alt="Cancer icon" data-src="../../assets/images/Icon/ungthu.avif" class="lazyload" />
                         <span>Ung thư</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Infectious diseases icon" data-src="./assets/images/Icon/truyennhiem.avif"
+                        <img alt="Infectious diseases icon" data-src="../../assets/images/Icon/truyennhiem.avif"
                             class="lazyload" />
                         <span>Truyền nhiễm</span>
                     </div>
@@ -250,14 +181,14 @@ include BASE_PATH . 'partials/sidebar.php';
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
                         <img alt="Endocrine and metabolic health icon"
-                            data-src="./assets/images/Icon/noitiet-chuyenhoa.avif" class="lazyload" />
+                            data-src="../../assets/images/Icon/noitiet-chuyenhoa.avif" class="lazyload" />
                         <span>Nội tiết - Chuyển hóa</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Kidney and urinary health icon" data-src="./assets/images/Icon/than.avif"
+                        <img alt="Kidney and urinary health icon" data-src="../../assets/images/Icon/than.avif"
                             class="lazyload" />
                         <span>Thận - Tiết niệu</span>
                     </div>
@@ -265,7 +196,7 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Allergy icon" data-src="./assets/images/Icon/diung.avif" class="lazyload" />
+                        <img alt="Allergy icon" data-src="../../assets/images/Icon/diung.avif" class="lazyload" />
                         <span>Dị ứng</span>
                     </div>
                 </div>
@@ -273,14 +204,14 @@ include BASE_PATH . 'partials/sidebar.php';
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
                         <img alt="Skin, hair, and nail health icon" height="40"
-                            data-src="./assets/images/Icon/da-toc-mong.avif" width="40" class="lazyload" />
+                            data-src="../../assets/images/Icon/da-toc-mong.avif" width="40" class="lazyload" />
                         <span>Da - Tóc - Móng</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Cardiovascular health icon" data-src="./assets/images/Icon/timmach.avif"
+                        <img alt="Cardiovascular health icon" data-src="../../assets/images/Icon/timmach.avif"
                             class="lazyload" />
                         <span>Tim mạch</span>
                     </div>
@@ -288,14 +219,14 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Blood health icon" data-src="./assets/images/Icon/mau.avif" class="lazyload" />
+                        <img alt="Blood health icon" data-src="../../assets/images/Icon/mau.avif" class="lazyload" />
                         <span>Máu</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Vitamin and mineral supplements icon" data-src="./assets/images/Icon/vitamin.avif"
+                        <img alt="Vitamin and mineral supplements icon" data-src="../../assets/images/Icon/vitamin.avif"
                             class="lazyload" />
                         <span>Vitamin - khoáng chất</span>
                     </div>
@@ -303,14 +234,14 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Diabetes icon" data-src="./assets/images/Icon/tieuduong.avif" class="lazyload" />
+                        <img alt="Diabetes icon" data-src="../../assets/images/Icon/tieuduong.avif" class="lazyload" />
                         <span>Tiểu đường</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Dental health icon" data-src="./assets/images/Icon/rang-ham-mat.avif"
+                        <img alt="Dental health icon" data-src="../../assets/images/Icon/rang-ham-mat.avif"
                             class="lazyload" />
                         <span>Răng - Hàm - Mặt</span>
                     </div>
@@ -318,14 +249,14 @@ include BASE_PATH . 'partials/sidebar.php';
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Liver health icon" data-src="./assets/images/Icon/gan.avif" class="lazyload" />
+                        <img alt="Liver health icon" data-src="../../assets/images/Icon/gan.avif" class="lazyload" />
                         <span>Gan</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-sm-4 col-md-3 mb-3">
                     <div class="category-card animate-on-scroll">
-                        <img alt="Digestive health icon" data-src="./assets/images/Icon/tieuhoa.avif"
+                        <img alt="Digestive health icon" data-src="../../assets/images/Icon/tieuhoa.avif"
                             class="lazyload" />
                         <span>Tiêu hóa</span>
                     </div>
@@ -340,71 +271,71 @@ include BASE_PATH . 'partials/sidebar.php';
         <div class="row">
             <div class="col-12 col-sm-6 mb-4">
                 <a href="./app/views/chuyenkhoa.php" class="service-card">
-                    <img data-src="./assets/images/Icon/iconkham-chuyen-khoa.png" alt="Icon of a hospital building"
+                    <img data-src="../../assets/images/Icon/iconkham-chuyen-khoa.png" alt="Icon of a hospital building"
                         class="lazyload">
                     <span>Khám Chuyên khoa</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/iconkham-tu-xa.png"
+                    <img data-src="../../assets/images/Icon/iconkham-tu-xa.png"
                         alt="Icon of a mobile phone with a medical cross" class="lazyload">
                     <span>Khám từ xa</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/iconkham-tong-quan.png"
+                    <img data-src="../../assets/images/Icon/iconkham-tong-quan.png"
                         alt="Icon of a clipboard with a medical cross" class="lazyload">
                     <span>Khám tổng quát</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/iconxet-nghiem-y-hoc.png"
+                    <img data-src="../../assets/images/Icon/iconxet-nghiem-y-hoc.png"
                         alt="Icon of a test tube with a drop of liquid" class="lazyload">
                     <span>Xét nghiệm y học</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/iconsuc-khoe-tinh-than.png"
+                    <img data-src="../../assets/images/Icon/iconsuc-khoe-tinh-than.png"
                         alt="Icon of a head with a medical cross" class="lazyload">
                     <span>Sức khỏe tinh thần</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/iconkham-nha-khoa.png"
+                    <img data-src="../../assets/images/Icon/iconkham-nha-khoa.png"
                         alt="Icon of a tooth with a medical cross" class="lazyload">
                     <span>Khám nha khoa</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/icongoi-phau-thuat.png" alt="Icon of a microscope"
+                    <img data-src="../../assets/images/Icon/icongoi-phau-thuat.png" alt="Icon of a microscope"
                         class="lazyload">
                     <span>Gói Phẫu thuật</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/icons-tieu-duong.png" alt="Icon of a glucose meter"
+                    <img data-src="../../assets/images/Icon/icons-tieu-duong.png" alt="Icon of a glucose meter"
                         class="lazyload">
                     <span>Sống khỏe Tiểu đường</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/iconbai-test-suc-khoe2.png" alt="Icon of a health test"
+                    <img data-src="../../assets/images/Icon/iconbai-test-suc-khoe2.png" alt="Icon of a health test"
                         class="lazyload">
                     <span>Bài Test Sức khỏe</span>
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
                 <a href="" class="service-card">
-                    <img data-src="./assets/images/Icon/near-home-01.png" alt="Icon of a shield with a medical cross"
-                        class="lazyload">
+                    <img data-src="../../assets/images/Icon/near-home-01.png"
+                        alt="Icon of a shield with a medical cross" class="lazyload">
                     <span>Y tế gần bạn</span>
                 </a>
             </div>
@@ -477,7 +408,7 @@ include BASE_PATH . 'partials/sidebar.php';
                         </div>
                     </div>
                     <div class="timeline__event timeline__event--type2">
-                        <div class="timeline__event__icon">👩‍⚕️</div>
+                        <div class="timeline__event__icon">👩⚕️</div>
                         <div class="timeline__event__date">Bước 5</div>
                         <div class="timeline__event__content">
                             <div class="timeline__event__title">Tham Gia Cuộc Hẹn</div>
@@ -537,7 +468,7 @@ include BASE_PATH . 'partials/sidebar.php';
     <section class="about py-5 bg-light animate-on-scroll">
         <div class="container text-center">
             <div class="about__icon mb-3">
-                <img data-src="./assets/images/Icon/doctornurse-svgrepo-com.svg" alt="" class="img-fluid lazyload"
+                <img data-src="../../assets/images/Icon/doctornurse-svgrepo-com.svg" alt="" class="img-fluid lazyload"
                     style="width: 50px" />
             </div>
             <h2 class="mb-3 text-primary position-relative section-title-underline animate-on-scroll fw-bold">
@@ -610,7 +541,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/book.html" class="doctor-card text-decoration-none text-center">
                                     <div class="doctor-avatar">
-                                        <img src="./assets/images/Doctors/032958-bac-si-da-lieu-hoang-hong-manh.jpg"
+                                        <img src="../../assets/images/Doctors/032958-bac-si-da-lieu-hoang-hong-manh.jpg"
                                             alt="Bác sĩ Nguyễn Văn A" class="doctor-img" />
                                     </div>
                                     <div class="doctor-info">
@@ -626,7 +557,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/book.html" class="doctor-card text-decoration-none text-center">
                                     <div class="doctor-avatar">
-                                        <img src="./assets/images/Doctors/045850-bac-si-da-lieu-hoai-thu.jpg"
+                                        <img src="../../assets/images/Doctors/045850-bac-si-da-lieu-hoai-thu.jpg"
                                             alt="Bác sĩ Nguyễn Văn A" class="doctor-img" />
                                     </div>
                                     <div class="doctor-info">
@@ -642,7 +573,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/book.html" class="doctor-card text-decoration-none text-center">
                                     <div class="doctor-avatar">
-                                        <img src="./assets/images/Doctors/avatar-Huynh-Quoc-Hieu.jpg"
+                                        <img src="../../assets/images/Doctors/avatar-Huynh-Quoc-Hieu.jpg"
                                             alt="Bác sĩ Nguyễn Văn A" class="doctor-img" />
                                     </div>
                                     <div class="doctor-info">
@@ -658,7 +589,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/book.html" class="doctor-card text-decoration-none text-center">
                                     <div class="doctor-avatar">
-                                        <img src="./assets/images/Doctors/avatar-TS.BS_.Chu-Trong-Hiep.webp"
+                                        <img src="../../assets/images/Doctors/avatar-TS.BS_.Chu-Trong-Hiep.webp"
                                             alt="Bác sĩ Nguyễn Văn A" class="doctor-img" />
                                     </div>
                                     <div class="doctor-info">
@@ -674,7 +605,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/book.html" class="doctor-card text-decoration-none text-center">
                                     <div class="doctor-avatar">
-                                        <img src="./assets/images/Doctors/1536566238-bacsy.jpg"
+                                        <img src="../../assets/images/Doctors/1536566238-bacsy.jpg"
                                             alt="Bác sĩ Nguyễn Văn A" class="doctor-img" />
                                     </div>
                                     <div class="doctor-info">
@@ -715,7 +646,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/test.html" class="health-card text-decoration-none">
                                     <div class="health-img-wrapper">
-                                        <img src="./assets/images/Banner/baitest.jpg" alt="Làm bài test"
+                                        <img src="../../assets/images/Banner/baitest.jpg" alt="Làm bài test"
                                             class="health-img" />
                                     </div>
                                     <div class="health-info text-center">
@@ -731,7 +662,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/faq.html" class="health-card text-decoration-none">
                                     <div class="health-img-wrapper">
-                                        <img src="./assets/images/Banner/BS-tu-van-truc-tuyen-scaled.webp"
+                                        <img src="../../assets/images/Banner/BS-tu-van-truc-tuyen-scaled.webp"
                                             alt="Cẩm nang sức khỏe" class="health-img" />
                                     </div>
                                     <div class="health-info text-center">
@@ -747,8 +678,8 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/mental-health.html" class="health-card text-decoration-none">
                                     <div class="health-img-wrapper">
-                                        <img src="./assets/images/Banner/A-120-1024x683.jpg" alt="Sức khỏe tinh thần"
-                                            class="health-img w-100 img-fluid" />
+                                        <img src="../../assets/images/Banner/A-120-1024x683.jpg"
+                                            alt="Sức khỏe tinh thần" class="health-img w-100 img-fluid" />
                                     </div>
                                     <div class="health-info text-center">
                                         <h5 class="health-title">Sức khỏe tinh thần</h5>
@@ -763,7 +694,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <li class="splide__slide">
                                 <a href="/pages/handbook.html" class="health-card text-decoration-none">
                                     <div class="health-img-wrapper">
-                                        <img src="./assets/images/Banner/15286388737940828273262951986749102473157648n-1-16226320314851228811282-crop-1622632145661774901212.webp"
+                                        <img src="../../assets/images/Banner/15286388737940828273262951986749102473157648n-1-16226320314851228811282-crop-1622632145661774901212.webp"
                                             alt="Hỏi đáp miễn phí" class="health-img" />
                                     </div>
                                     <div class="health-info text-center">
@@ -805,7 +736,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical11.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical11.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -871,7 +802,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical12.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical12.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -937,7 +868,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical14.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical14.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1003,7 +934,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical15.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical15.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1069,7 +1000,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical16.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical16.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1134,7 +1065,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical18.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical18.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1200,7 +1131,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical07.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical07.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1266,7 +1197,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical08.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical08.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1332,7 +1263,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical09.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical09.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1398,7 +1329,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <li class="splide__slide">
                                     <div class="card overflow-hidden">
                                         <div class="card-img position-relative card__img">
-                                            <img data-src="./assets/images/Shop/Medical/medical10.avif" alt=""
+                                            <img data-src="../../assets/images/Shop/Medical/medical10.avif" alt=""
                                                 class="img-fluid lazyload w-100" />
                                             <div class="card__wrap">
                                                 <div class="card__wrap--icon">
@@ -1485,7 +1416,7 @@ include BASE_PATH . 'partials/sidebar.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="./assets/images/Banner/bannerModal.png" class="img-fluid" alt="DoctorHub Image" />
+                    <img src="../../assets/images/Banner/bannerModal.png" class="img-fluid" alt="DoctorHub Image" />
                     <p>
                         DoctorHub là nơi cung cấp thông tin sức khỏe và kết nối với các
                         chuyên gia y tế. Hãy đăng ký ngay để nhận các lời khuyên hữu ích!
@@ -1523,7 +1454,7 @@ include BASE_PATH . 'partials/sidebar.php';
                         <li class="splide__slide">
                             <a href="#" class="guide-card text-decoration-none">
                                 <div class="guide-thumb">
-                                    <img data-src="./assets/images/Banner/camnang5.png" alt="Guide 1"
+                                    <img data-src="../../assets/images/Banner/camnang5.png" alt="Guide 1"
                                         class="lazyload" />
                                     <div class="guide-overlay">
                                         <span>News</span>
@@ -1540,7 +1471,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <a href="https://www.vinmec.com/vie/bai-viet/nhung-dieu-phu-nu-sau-sinh-mo-can-biet-vi"
                                 class="guide-card text-decoration-none">
                                 <div class="guide-thumb">
-                                    <img data-src="./assets/images/Banner/camnang1.png" alt="Guide 1"
+                                    <img data-src="../../assets/images/Banner/camnang1.png" alt="Guide 1"
                                         class="lazyload" />
                                     <div class="guide-overlay">
                                         <span>News</span>
@@ -1557,7 +1488,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <a href="https://tamanhhospital.vn/suy-giam-tri-nho/"
                                 class="guide-card text-decoration-none">
                                 <div class="guide-thumb">
-                                    <img data-src="./assets/images/Banner/camnang3.png" alt="Guide 1"
+                                    <img data-src="../../assets/images/Banner/camnang3.png" alt="Guide 1"
                                         class="lazyload" />
                                     <div class="guide-overlay">
                                         <span>News</span>
@@ -1575,7 +1506,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <a href="https://benhvienthucuc.vn/suy-giam-tri-nho-nen-an-gi-de-cai-thien-hieu-qua/"
                                 class="guide-card text-decoration-none">
                                 <div class="guide-thumb">
-                                    <img data-src="./assets/images/Banner/camnang2.png" alt="Guide 1"
+                                    <img data-src="../../assets/images/Banner/camnang2.png" alt="Guide 1"
                                         class="lazyload" />
                                     <div class="guide-overlay">
                                         <span>News</span>
@@ -1592,7 +1523,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <a href="https://benhvienthucuc.vn/man-duc-nam-lam-mat-ngu-co-che-va-cach-cai-thien/"
                                 class="guide-card text-decoration-none">
                                 <div class="guide-thumb">
-                                    <img data-src="./assets/images/Banner/camnang4.png" alt="Guide 1"
+                                    <img data-src="../../assets/images/Banner/camnang4.png" alt="Guide 1"
                                         class="lazyload" />
                                     <div class="guide-overlay">
                                         <span>News</span>
@@ -1609,7 +1540,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <a href="https://benhvienthucuc.vn/benh-roi-loan-tien-dinh-nguyen-nhan-trieu-chung-dieu-tri/"
                                 class="guide-card text-decoration-none">
                                 <div class="guide-thumb">
-                                    <img data-src="./assets/images/Banner/camnang6.png" alt="Guide 1"
+                                    <img data-src="../../assets/images/Banner/camnang6.png" alt="Guide 1"
                                         class="lazyload" />
                                     <div class="guide-overlay">
                                         <span>News</span>
@@ -1642,7 +1573,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <div class="card blog-card">
                                     <img alt="A person using a laptop with a stethoscope on the table"
                                         class="card-img-top lazyload" height="400"
-                                        data-src="./assets/images/Blog/LBr7jLZR-Thuoc-Cum-tamiflu-768x403.jpg"
+                                        data-src="../../assets/images/Blog/LBr7jLZR-Thuoc-Cum-tamiflu-768x403.jpg"
                                         width="600" />
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title text-primary-emphasis">
@@ -1670,7 +1601,7 @@ include BASE_PATH . 'partials/sidebar.php';
                             <a href="#!" class="text-decoration-none">
                                 <div class="card blog-card">
                                     <img alt="A doctor smiling in a park" class="card-img-top lazyload" height="400"
-                                        data-src="./assets/images/Blog/cum-mua-768x456.jpg" width="600" />
+                                        data-src="../../assets/images/Blog/cum-mua-768x456.jpg" width="600" />
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title text-primary-emphasis">
                                             Cúm mùa: Triệu chứng, cách phòng ngừa và điều trị hiệu
@@ -1698,7 +1629,7 @@ include BASE_PATH . 'partials/sidebar.php';
                                 <div class="card blog-card">
                                     <img alt="A laptop, coffee cup, and phone on a wooden table"
                                         class="card-img-top lazyload" height="400"
-                                        data-src="./assets/images/Blog/20210318_030801_537597_che_do_an_uong_can_max_1800x1800_jpg_e73157190b-768x480.jpg"
+                                        data-src="../../assets/images/Blog/20210318_030801_537597_che_do_an_uong_can_max_1800x1800_jpg_e73157190b-768x480.jpg"
                                         width="600" />
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title text-primary-emphasis">
@@ -1725,11 +1656,10 @@ include BASE_PATH . 'partials/sidebar.php';
             </div>
         </div>
     </section>
-</body>
-<?php
-include BASE_PATH . 'partials/footer.php';
 
-?>
+
+    <?php include_once __DIR__ . '/../../partials/footer.php'; ?>
+</body>
 <!-- *SplideJS Scripts* -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/css/splide.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/js/splide.min.js"></script>
@@ -1749,5 +1679,8 @@ include BASE_PATH . 'partials/footer.php';
 <!-- *Lazysizes* -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.0/lazysizes.min.js" async=""></script>
 <!-- *Splide JS* -->
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script><!-- * Google API* -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+</html>

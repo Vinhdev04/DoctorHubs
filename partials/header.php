@@ -1,12 +1,3 @@
-<?php
-// Debug session
-if (!isset($_SESSION)) {
-    echo "Session not started!";
-} else {
-    echo "Session values: ";
-    var_dump($_SESSION);
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,11 +36,18 @@ if (!isset($_SESSION)) {
     <!-- *Liên kết RemixIcon* -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" rel="stylesheet" />
     <!-- *Splide CSS* -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" />
     <!-- *Fontawesome* -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <!-- *LazySizes* -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async=""></script>
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <!-- jQuery (yêu cầu cho Toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- *Stylesheets* -->
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -63,7 +61,25 @@ if (!isset($_SESSION)) {
     .user-profile {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
+        font-weight: 500;
+    }
+
+    .user-profile i {
+        font-size: 1.2rem;
+    }
+
+    .dropdown-menu {
+        min-width: 150px;
+    }
+
+    .dropdown-item {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
     }
     </style>
 </head>
@@ -91,7 +107,7 @@ if (!isset($_SESSION)) {
             </div>
 
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand navbar__link d-flex align-items-center" href="./index.php">
+                <a class="navbar-brand navbar__link d-flex align-items-center" href="/Doctor_Hubs/index.php">
                     <img data-src="./assets/images/Logo/DoctorHub.png" alt="Logo" width="30" height="24"
                         class="d-inline-block align-text-top img-fluid navbar__logo lazyload" />
                     DoctorHub
@@ -103,61 +119,46 @@ if (!isset($_SESSION)) {
                 <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: end">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/index.php">Trang Chủ</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=home">Trang Chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/book.php">Đặt Lịch Khám</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=book">Đặt Lịch Khám</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/consultation.php">Tư Vấn Sức Khỏe</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=consultation">Tư Vấn Sức Khỏe</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/services.php">Dịch Vụ Y Tế</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=services">Dịch Vụ Y Tế</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/contact.php">Liên Hệ</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=contact">Liên Hệ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/blog.php">Blog</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=blog">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./app/views/shop.php">Shop</a>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=shop">Shop</a>
                         </li>
-                        <?php if (isset($_SESSION['user_id']) && !empty($_SESSION['username'])): ?>
-                        <!-- Cart Icon -->
-                        <li class="nav-item">
-                            <a class="nav-link position-relative" href="./app/views/cart.php">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    0
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- User Icon + Name with Dropdown -->
+                        <!-- User Info -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            <?php if (isset($_SESSION['username']) && !empty($_SESSION['username'])): ?>
+                            <a class="nav-link dropdown-toggle user-profile" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-user-circle me-2"></i>
-                                <span><?= htmlspecialchars($_SESSION['username']) ?></span>
+                                <i class="fa fa-user"></i> <?= htmlspecialchars($_SESSION['username']) ?>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Tài khoản</a></li>
-                                <li><a class="dropdown-item"
-                                        href="./app/controllers/AuthController.php?action=logout">Đăng xuất</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="/DoctorHubs/index.php?action=dashboard">Tài
+                                        khoản</a></li>
+                                <li><a class="dropdown-item" href="/index.php?action=logout">Đăng xuất</a>
+                                </li>
                             </ul>
-                        </li>
-                        <?php else: ?>
-                        <!-- User Icon for Login -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="./app/views/signIn.php">
-                                <i class="fa fa-user-circle"></i>
-                            </a>
+                            <?php else: ?>
+                            <a class="nav-link" href="/DoctorHubs/index.php?action=signIn">Đăng nhập</a>
+                            <?php endif; ?>
                         </li>
                         <!-- Cart Icon -->
                         <li class="nav-item">
-                            <a class="nav-link position-relative" href="./app/views/cart.php">
+                            <a class="nav-link position-relative" href="/Doctor_Hubs/index.php?action=cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -165,7 +166,6 @@ if (!isset($_SESSION)) {
                                 </span>
                             </a>
                         </li>
-                        <?php endif; ?>
                     </ul>
                 </div>
             </nav>
@@ -173,8 +173,7 @@ if (!isset($_SESSION)) {
     </header>
 
     <!-- *SplideJS Scripts* -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/css/splide.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <!-- *Popper* -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
         integrity="sha384-JGLZOLoMCs5hQdIb2Rlp+vgbp7NjPR8tW3mv4TqRfj7sG04O1LYljX29lvH9acX7" crossorigin="anonymous">
@@ -187,10 +186,6 @@ if (!isset($_SESSION)) {
     <script src="./assets/javascript/main.js" type="module"></script>
     <script src="./services/handleModal.js"></script>
     <script src="./services/handleSlider.js"></script>
-    <!-- *Lazysizes* -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.0/lazysizes.min.js" async=""></script>
-    <!-- *Splide JS* -->
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <!-- *Google API* -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>

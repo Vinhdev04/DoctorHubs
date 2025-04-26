@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../assets/images/Logo/DoctorHub.png" type="image/x-icon">
+    <!-- *Fontawesome* -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!-- *Liên kết RemixIcon* -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" rel="stylesheet" />
+    <!-- *Liên kết Bootstrap CSS* -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/animation.css" />
+    <link rel="stylesheet" href="../../assets/css/login.css" />
+    <title>SignUp | DoctorHub</title>
+    <style>
+    .card {
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    #profile {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    img {
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+    }
+    </style>
+    <style>
+    .container.container-login {
+        width: 500px;
+    }
+
+    .form-container {
+        width: 100%;
+        position: unset;
+    }
+
+    .control__group {
+        color: #fff;
+        height: 42px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .container .form-container .social-login .control__group--google {
+        background-color: #db4437;
+    }
+
+    .container .form-container .social-login .control__group--facebook {
+        background-color: #1877f2;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="container container-login" id="container">
+        <div class="form-container">
+            <form action="" method="post" id="form">
+                <h1 class="text-capitalize mb-3 text-center">Đăng Ký</h1>
+
+                <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                    <label for="input__mail"><i class="fa-solid fa-envelope"></i></label>
+                    <input type="email" placeholder="Email" class="input__mail" id="input__mail" name="email" required />
+                </div>
+
+                <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                    <label for="input__pass"><i class="ri-lock-line"></i></label>
+                    <input type="password" placeholder="Mật khẩu" class="input__pass" id="input__pass" name="password" required />
+                </div>
+
+                <div class="input-group d-flex align-items-center flex-nowrap form-group">
+                    <label for="input__cfPass"><i class="ri-lock-line"></i></label>
+                    <input type="password" placeholder="Xác nhận mật khẩu" class="input__cfPass" id="input__cfPass" name="confirm_password" required />
+                </div>
+                <button type="submit" class="btn signUp">Đăng ký</button>
+
+                <p class="mt-3 text-center">
+                    Bạn đã có tài khoản?
+                    <a href="./signIn.php" class="form__desc">Đăng nhập</a>
+                </p>
+            </form>
+
+            <div id="profile" style="display:none;">
+                <h3>Chào, <span id="userName"></span>!</h3>
+                <img id="userImage" src="" alt="User Image" />
+                <p>Email: <span id="userEmail"></span></p>
+                <button onclick="logout()" class="btn btn-danger">Đăng Xuất</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- *Bootstrap* -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+<script src="../../services/handleLogin.js"></script> <!-- SDK Google -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- SDK Facebook -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+<script>
+// Google Login
+window.onload = function() {
+    google.accounts.id.initialize({
+        client_id: "16769569373-33ss6o0l2c3s75urp2trlq4nbahdvapf.apps.googleusercontent.com", // 🔁 THAY bằng Client ID thực của bạn
+        callback: handleGoogleResponse,
+    });
+
+    document.getElementById("googleBtn").addEventListener("click", function() {
+        const clientId = "16769569373-33ss6o0l2c3s75urp2trlq4nbahdvapf.apps.googleusercontent.com";
+        const redirectUri =
+            "http://localhost:3000/auth/google/callback"; // 🔁 sửa thành URL backend của bạn
+
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${redirectUri}&` +
+            `response_type=token&` +
+            `scope=email%20profile`;
+
+        window.location.href = authUrl;
+    });
+
+
+
+
+    document.getElementById("facebookBtn").addEventListener("click", function() {
+        FB.login(function(response) {
+            if (response.status === 'connected') {
+                const token = response.authResponse.accessToken;
+                fetch("/auth/facebook", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            token: token
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = "/index";
+                        } else {
+                            alert("Đăng nhập Facebook thất bại");
+                        }
+                    });
+            }
+        }, {
+            scope: 'public_profile,email'
+        });
+    });
+};
+
+function handleGoogleResponse(response) {
+    fetch("/auth/google", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: response.credential
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = "/index";
+            } else {
+                alert("Đăng nhập Google thất bại");
+            }
+        });
+}
+
+// Facebook SDK init
+window.fbAsyncInit = function() {
+    FB.init({
+        appId: '1728886988022684',
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+    });
+};
+</script>
+
+<!-- <script>
+    /**
+     * Xử lý phản hồi từ Google sau khi đăng nhập
+     */
+    function handleCredentialResponse(response) {
+      if (!response || !response.credential) {
+        console.error("Lỗi: Không nhận được JWT Token từ Google");
+        return;
+      }
+
+      let data = parseJwt(response.credential);
+      if (!data || !data.name || !data.email) {
+        console.error("Lỗi: Không thể giải mã JWT Token.");
+        return;
+      }
+
+      console.log("User Data:", data);
+
+      // Hiển thị thông tin user
+      document.getElementById("userName").textContent = data.name;
+      document.getElementById("userEmail").textContent = data.email;
+      document.getElementById("userImage").src = data.picture;
+      document.getElementById("profile").style.display = "block";
+
+      // Lưu vào LocalStorage
+      localStorage.setItem("user", JSON.stringify(data));
+    }
+
+    /**
+     * Giải mã JWT Token
+     */
+    function parseJwt(token) {
+      try {
+        let base64Url = token.split(".")[1];
+        let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        let jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+            .join("")
+        );
+        return JSON.parse(jsonPayload);
+      } catch (error) {
+        console.error("Lỗi khi parse JWT:", error);
+        return null;
+      }
+    }
+
+    /**
+     * Đăng xuất
+     */
+    function logout() {
+      document.getElementById("profile").style.display = "none";
+      document.getElementById("userName").textContent = "";
+      document.getElementById("userEmail").textContent = "";
+      document.getElementById("userImage").src = "";
+      localStorage.removeItem("user");
+    }
+
+    /**
+     * Kiểm tra đăng nhập
+     */
+    function checkLoginStatus() {
+      let userData = localStorage.getItem("user");
+      if (userData) {
+        let data = JSON.parse(userData);
+        document.getElementById("userName").textContent = data.name;
+        document.getElementById("userEmail").textContent = data.email;
+        document.getElementById("userImage").src = data.picture;
+        document.getElementById("profile").style.display = "block";
+      }
+    }
+
+    window.onload = checkLoginStatus;
+  </script> -->
+<!-- <script>
+function handleCredentialResponse(response) {
+    if (!response || !response.credential) {
+        console.error("Lỗi: Không nhận được JWT Token từ Google");
+        return;
+    }
+
+    let data = parseJwt(response.credential);
+    console.log("User Data:", data);
+
+    if (data) {
+        localStorage.setItem("user", JSON.stringify(data));
+
+        alert(`Đăng nhập thành công! Chào ${data.name}`);
+
+        window.location.href = "../../index.php";
+    }
+}
+
+function parseJwt(token) {
+    let base64Url = token.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+        atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+}
+
+window.onload = function() {
+    google.accounts.id.initialize({
+        client_id: "60552469035-27c42t2tcr98qbmp27b6r2tti6b8vvql.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+    });
+
+    document
+        .getElementById("google-signin-btn")
+        .addEventListener("click", function() {
+            google.accounts.id.prompt(); // Hiển thị hộp thoại đăng nhập
+        });
+};
+</script> -->
+<!-- <script>
+    function fakeLogin() {
+      const userData = {
+        name: "Nguyễn Văn A",
+        avatar: "https://lh3.googleusercontent.com/a/AATXAJwxxxxx",
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+      window.location.href = "index.html"; // Quay về trang chủ
+    }
+  </script> -->
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+document.getElementById('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const password = document.getElementById('input__pass').value;
+    const confirmPassword = document.getElementById('input__cfPass').value;
+    
+    if (password !== confirmPassword) {
+        alert('Mật khẩu không khớp!');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    
+    fetch('../controllers/auth/signup.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Đăng ký thành công!');
+            window.location.href = '../../index.php';
+        } else {
+            alert(data.message || 'Đăng ký thất bại');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi trong quá trình đăng ký');
+    });
+});
+</script>
+
+</html>

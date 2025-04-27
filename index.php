@@ -333,7 +333,7 @@ require_once 'config/init.php';
                 </a>
             </div>
             <div class="col-12 col-sm-6 mb-4">
-                <a href="" class="service-card">
+                <a href="./app/views/test.php" class="service-card">
                     <img data-src="./assets/images/Icon/iconbai-test-suc-khoe2.png" alt="Icon of a health test"
                         class="lazyload">
                     <span>Bài Test Sức khỏe</span>

@@ -1,6 +1,6 @@
 <?php
 // Include the initialization file
-require_once '../../config/init.php';
+require_once '../../../config/init.php';
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@ require_once '../../config/init.php';
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="../../assets/css/view_test.css">
+    <link rel="stylesheet" href="../../../assets/css/view_test.css">
 
 </head>
 
@@ -41,7 +41,7 @@ require_once '../../config/init.php';
         </div>
 
         <div class="navigation">
-            <button class="nav-button menu-button" onclick="goToMenu()">Menu</button>
+            <button class="nav-button menu-button" onclick="goToMenu()">Quay lại</button>
             <button class="nav-button prev-button" id="prev-button" onclick="prevQuestion()" disabled>Trước đó</button>
             <button class="nav-button next-button" id="next-button" onclick="nextQuestion()" disabled>Tiếp theo</button>
         </div>
@@ -614,7 +614,7 @@ require_once '../../config/init.php';
     }
 
     function goToMenu() {
-        window.location.href = '../views/test.php';
+        window.location.href = '../../views/test.php';
     }
 
     function calculateResult() {
@@ -641,7 +641,8 @@ require_once '../../config/init.php';
                 cancel: {
                     text: "Thoát",
                     visible: true,
-                    className: "btn btn-danger"
+                    className: "btn btn-danger",
+
                 },
                 confirm: {
                     text: "Quay lại",
@@ -655,7 +656,7 @@ require_once '../../config/init.php';
             }
         }).then((value) => {
             if (value === true) {
-                window.location.href = '../views/test.php';
+                window.location.href = '../../views/test.php';
             } else if (value === "download") {
                 generatePDF(totalScore, resultMessage);
             }

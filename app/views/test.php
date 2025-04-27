@@ -153,7 +153,7 @@ require_once '../../config/init.php';
                                         mệt mỏi kéo dài, v.v.</li>
                                     <li><strong>Mục đích:</strong> Phát hiện sớm các dấu hiệu trầm cảm và khuyến khích
                                         tìm kiếm hỗ trợ tâm lý kịp thời.</li>
-                                    <a href="./beck_test.php" class="test-card-button btn">Làm bài test</a>
+                                    <a href="./Test/beck_test.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -180,7 +180,8 @@ require_once '../../config/init.php';
                                     <li><strong>Đối tượng:</strong>Người có triệu chứng lo âu,
                                         trầm cảm và căng thẳng. </li>
                                     <li><strong>Mục đích:</strong>Đánh giá và đề xuất phương pháp điều trị thích hợp.
-                                    </li><a href="#" class="test-card-button btn">Làm bài test</a>
+                                    </li><a href="./Test/stress_test_42.php" class="test-card-button btn">Làm bài
+                                        test</a>
                                 </ul>
                             </div>
                         </div>
@@ -204,8 +205,8 @@ require_once '../../config/init.php';
                                     <li><strong>Đối tượng:</strong>Người có triệu chứng lo âu,
                                         trầm cảm và căng thẳng. </li>
                                     <li><strong>Mục đích:</strong>Kiểm tra,
-                                        phát hiện và đưa ra phương pháp điều trị thích hợp.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        phát hiện và đưa ra phương pháp điều trị thích hợp.</li><a
+                                        href="./Test/stress_test_42.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -228,8 +229,8 @@ require_once '../../config/init.php';
                                     <li><strong>Câu hỏi:</strong>30 câu hỏi.</li>
                                     <li><strong>Đối tượng:</strong>Thanh thiếu niên từ 10 đến 20 tuổi. </li>
                                     <li><strong>Mục đích:</strong>Kiểm tra,
-                                        phát hiện và điều trị bằng phương pháp thích hợp.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        phát hiện và điều trị bằng phương pháp thích hợp.</li><a
+                                        href="./Test/stress_rads.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -251,7 +252,8 @@ require_once '../../config/init.php';
                                     <li><strong>Câu hỏi:</strong>10 câu hỏi.</li>
                                     <li><strong>Đối tượng:</strong>Phụ nữ sau sinh có các triệu chứng trầm cảm</li>
                                     <li><strong>Mục đích:</strong>Đánh giá và xác định mức độ trầm cảm sau sinh của phụ
-                                        nữ.</li><a href="#" class="test-card-button btn">Làm bài test</a>
+                                        nữ.</li><a href="./Test/test_epds.php" class="test-card-button btn">Làm bài
+                                        test</a>
                                 </ul>
                             </div>
                         </div>
@@ -276,7 +278,8 @@ require_once '../../config/init.php';
                                     <li><strong>Câu hỏi:</strong>20 câu hỏi.</li>
                                     <li><strong>Đối tượng:</strong>Người có các triệu chứng rối loạn lo âu.</li>
                                     <li><strong>Mục đích:</strong>Đánh giá mức độ nghiêm trọng và tìm giải pháp điều
-                                        trị.</li><a href="#" class="test-card-button btn">Làm bài test</a>
+                                        trị.</li><a href="./Test/test_sas.php" class="test-card-button btn">Làm bài
+                                        test</a>
                                 </ul>
                             </div>
                         </div>
@@ -304,8 +307,9 @@ require_once '../../config/init.php';
                                         chảy máu nhẹ,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các triệu chứng của Sốt Xuất Huyết và
-                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a
+                                        href="./Test/test_sot_xuat_huyet.php" class="test-card-button btn">Làm bài
+                                        test</a>
                                 </ul>
                             </div>
                         </div>
@@ -334,8 +338,8 @@ require_once '../../config/init.php';
                                         sụt cân,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các triệu chứng của bệnh Tiểu Đường và
-                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a
+                                        href="./Test/test_tieu_duong.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -366,7 +370,7 @@ require_once '../../config/init.php';
                                         phát ban,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các triệu chứng của dị ứng thời tiết và
-                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
+                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="./Test/test_di_ung.php"
                                         class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
@@ -396,8 +400,8 @@ require_once '../../config/init.php';
                                         răng nhạy cảm,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các vấn đề về sức khỏe răng miệng và
-                                        khuyến khích tìm kiếm hỗ trợ nha khoa kịp thời.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        khuyến khích tìm kiếm hỗ trợ nha khoa kịp thời.</li><a
+                                        href="./Test/test_rang_mieng.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -425,7 +429,7 @@ require_once '../../config/init.php';
                                         tổn thương da bất thường,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các dấu hiệu của ung thư da và khuyến
-                                        khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
+                                        khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="./Test/test_hieu_ung_da.php"
                                         class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
@@ -456,7 +460,8 @@ require_once '../../config/init.php';
                                         móng tay dễ gãy,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các dấu hiệu thiếu sắt và khuyến khích
-                                        tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#" class="test-card-button btn">Làm
+                                        tìm kiếm hỗ trợ y tế kịp thời.</li><a href="./Test/test_thieu_sat.php"
+                                        class="test-card-button btn">Làm
                                         bài test</a>
                                 </ul>
                             </div>
@@ -486,8 +491,8 @@ require_once '../../config/init.php';
                                         mất thăng bằng,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các dấu hiệu của bệnh Parkinson và
-                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a
+                                        href="./Test/test_parkinson.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -516,8 +521,8 @@ require_once '../../config/init.php';
                                         phù nề,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các dấu hiệu của vấn đề tim mạch và
-                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a
+                                        href="./Test/test_tim_mach.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
@@ -548,8 +553,8 @@ require_once '../../config/init.php';
                                         thay đổi hành vi,
                                         v.v.</li>
                                     <li><strong>Mục đích:</strong>Phát hiện sớm các dấu hiệu của bệnh lý về não và
-                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a href="#"
-                                        class="test-card-button btn">Làm bài test</a>
+                                        khuyến khích tìm kiếm hỗ trợ y tế kịp thời.</li><a
+                                        href="./Test/test_benh_ve_nao.php" class="test-card-button btn">Làm bài test</a>
                                 </ul>
                             </div>
                         </div>
